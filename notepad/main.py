@@ -12,18 +12,14 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(750, 650)
 
         #Menubar 
-        menu_bar = QMenuBar()
-        self.setMenuBar(menu_bar)
-        
-        menu_bar.addMenu('&File')
-        menu_bar.addMenu('&Edit')
-        menu_bar.addMenu('&Format')
-        menu_bar.addMenu('&View')
-        menu_bar.addMenu('&Help')
+        self.menu_bar = QMenuBar()
+        self.setMenuBar(self.menu_bar)
 
+        self.create_menu_bar()
+        
     def actions_dict(self):
-        dicts = {
-            "file": {
+        return {
+            "File": {
                 "file": "New",
                 "new_window": "New Window",
                 "open": "Open",
@@ -31,23 +27,30 @@ class MainWindow(QMainWindow):
                 "Print": "Print",
                 "Exit": "Exit"
             },
-            "edit": {
+            "Edit": {
                 "find": "Find"
             },
-            "format": {
+            "Format": {
                 "font": "Font",
                 "size": "Size"
             },
-            "view": {
+            "View": {
                 "zoom_in": "Zoom In",
                 "zoom_out": "Zoom Out",
                 "restore": "Restore Default Zoom",
                 "status_bar": "Status Bar"
             },
-            "help": {
+            "Help": {
                 "about": "About Notepad"
             }
         }
+
+    def create_menu_bar(self):
+        actions = self.actions_dict()
+        for menu, menu_value in actions.items():
+            menu_name = self.menu_bar.addMenu(f'{menu}')
+            for sub_menu_name, sub_menu_value in menu_value.items():
+                menu_name.addAction(sub_menu_value)
 
 def main():
     app = QApplication(sys.argv)
