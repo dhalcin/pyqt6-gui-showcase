@@ -14,8 +14,13 @@ class MainWindow(QMainWindow):
         #Menubar 
         menu_bar = QMenuBar()
         self.setMenuBar(menu_bar)
-        menu_bar.addMenu('&File')
         
+        menu_bar.addMenu('&File')
+        menu_bar.addMenu('&Edit')
+        menu_bar.addMenu('&Format')
+        menu_bar.addMenu('&View')
+        menu_bar.addMenu('&Help')
+
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
