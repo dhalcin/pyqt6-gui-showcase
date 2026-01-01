@@ -21,6 +21,34 @@ class MainWindow(QMainWindow):
         menu_bar.addMenu('&View')
         menu_bar.addMenu('&Help')
 
+    def actions_dict(self):
+        dicts = {
+            "file": {
+                "file": "New",
+                "new_window": "New Window",
+                "open": "Open",
+                "save_as": "Save As",
+                "Print": "Print",
+                "Exit": "Exit"
+            },
+            "edit": {
+                "find": "Find"
+            },
+            "format": {
+                "font": "Font",
+                "size": "Size"
+            },
+            "view": {
+                "zoom_in": "Zoom In",
+                "zoom_out": "Zoom Out",
+                "restore": "Restore Default Zoom",
+                "status_bar": "Status Bar"
+            },
+            "help": {
+                "about": "About Notepad"
+            }
+        }
+
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
