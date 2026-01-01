@@ -1,7 +1,8 @@
 import sys
 from PyQt6.QtWidgets import (
     QMainWindow,
-    QApplication 
+    QApplication,
+    QMenuBar
 )
 
 class MainWindow(QMainWindow):
@@ -9,6 +10,11 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle('Clone of Notepad')
         self.setMinimumSize(750, 650)
+
+        #Menubar 
+        menu_bar = QMenuBar()
+        self.setMenuBar(menu_bar)
+        menu_bar.addMenu('&File')
         
 def main():
     app = QApplication(sys.argv)
