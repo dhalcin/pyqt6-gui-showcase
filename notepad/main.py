@@ -3,7 +3,9 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QApplication,
     QMenuBar,
-    QTextEdit
+    QTextEdit,
+    QStatusBar,
+    QWidget
 )
 
 class MainWindow(QMainWindow):
@@ -34,6 +36,13 @@ class MainWindow(QMainWindow):
         self.create_acctions(help_menu_container, help_menu)
 
         self.text_edit = QTextEdit()
+
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+        hola = QWidget()
+
+        self.status_bar.showMessage('notepad', 0)
+
         self.setCentralWidget(self.text_edit)
 
     # bar menu methods
