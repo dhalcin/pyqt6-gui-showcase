@@ -14,43 +14,62 @@ class MainWindow(QMainWindow):
         #Menubar 
         self.menu_bar = QMenuBar()
         self.setMenuBar(self.menu_bar)
-
-        self.create_menu_bar()
         
+        file_menu, edit_menu, format_menu, view_menu, help_menu = self.actions_dict()
+
+        file_menu_container = self.create_menu('File')
+        self.create_acctions(file_menu_container, file_menu)
+
+        edit_menu_container = self.create_menu('Edit')
+        self.create_acctions(edit_menu_container, edit_menu)
+
+        format_menu_container = self.create_menu('Format')
+        self.create_acctions(format_menu_container, format_menu)
+
+        view_menu_container = self.create_menu('View')
+        self.create_acctions(view_menu_container, view_menu)
+
+        help_menu_container = self.create_menu('Help')
+        self.create_acctions(help_menu_container, help_menu)
+
     def actions_dict(self):
-        return {
-            "File": {
-                "file": "New",
-                "new_window": "New Window",
-                "open": "Open",
-                "save_as": "Save As",
-                "Print": "Print",
-                "Exit": "Exit"
-            },
-            "Edit": {
-                "find": "Find"
-            },
-            "Format": {
-                "font": "Font",
-                "size": "Size"
-            },
-            "View": {
-                "zoom_in": "Zoom In",
-                "zoom_out": "Zoom Out",
-                "restore": "Restore Default Zoom",
-                "status_bar": "Status Bar"
-            },
-            "Help": {
-                "about": "About Notepad"
-            }
+        file_menu = {
+            "file": "New",
+            "new_window": "New Window",
+            "open": "Open",
+            "save_as": "Save As",
+            "print": "Print",
+            "exit": "Exit"
+        }
+        
+        edit_menu = {
+            "find": "Find"
+        }
+        
+        format_menu = {
+            "font": "Font",
+            "size": "Size"
         }
 
-    def create_menu_bar(self):
-        actions = self.actions_dict()
-        for menu, menu_value in actions.items():
-            menu_name = self.menu_bar.addMenu(f'{menu}')
-            for sub_menu_name, sub_menu_value in menu_value.items():
-                menu_name.addAction(sub_menu_value)
+        view_menu = {
+            "zoom_in": "Zoom In",
+            "zoom_out": "Zoom Out",
+            "restore": "Restore Default Zoom",
+            "status_bar": "Status Bar"
+        }
+
+        help_menu = {
+            "about": "About Notepad"
+        }
+        
+        return file_menu, edit_menu, format_menu, view_menu, help_menu
+
+    def create_menu(self, menu_name):
+        return self.menu_bar.addMenu(f'&{menu_name}')
+         
+    def create_acctions(self, menu_container, actions):
+        for action_name, action_value in actions.items():
+            menu_container.addAction(action_value)
 
 def main():
     app = QApplication(sys.argv)
