@@ -2,13 +2,14 @@ import sys
 from PyQt6.QtWidgets import (
     QMainWindow,
     QApplication,
-    QMenuBar
+    QMenuBar,
+    QTextEdit
 )
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Clone of Notepad')
+        self.setWindowTitle('Notepad')
         self.setMinimumSize(750, 650)
 
         #Menubar 
@@ -32,6 +33,10 @@ class MainWindow(QMainWindow):
         help_menu_container = self.create_menu('Help')
         self.create_acctions(help_menu_container, help_menu)
 
+        self.text_edit = QTextEdit()
+        self.setCentralWidget(self.text_edit)
+
+    # bar menu methods
     def actions_dict(self):
         file_menu = {
             "file": "New",
