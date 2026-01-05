@@ -1,11 +1,8 @@
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.QtCore import QTextStream, QFile, QIODevice
-import os
+from pathlib import Path
 
 class FileServices:
-    def __init__(self):
-        self.temp_file_path = None
-
     # menu bar services
     def new_file(self):
         print('selected action new_file')
@@ -16,7 +13,9 @@ class FileServices:
         if not file_path:
             return
 
-        target_window.current_file_path = file_path
+        target_window.current_file_path = file_path # current_file_path es un atributo de instancia de MainWindow
+        name_file = Path(file_path).name
+        target_window.setWindowTitle(name_file)
 
         file = QFile(file_path)
 
