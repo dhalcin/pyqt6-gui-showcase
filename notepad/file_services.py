@@ -32,14 +32,20 @@ class FileServices:
             print(f'Error when opening the file : {file.errorString}')
 
 
+    def _write_file(self, file_path, target_window):
+        try:
+            with open(file_path, 'w', encoding='utf-8') as file:
+                stream = target_window.text_edit.toPlainText()
+                file.write(stream)
+        except FileNotFoundError:
+            print('File not found')
+        except Exception as e:
+            print('error:', e)
+
     def save_file(self, target_window):
         file_path = target_window.current_file_path
         if file_path:
-            with open(file_path, 'w') as file:
-                stream = target_window.text_edit.toPlainText()
-                file.write(stream)
+            self._write_file(file_path, target_window)
         else:
             path = './new_file.txt'
-            with open(path, 'w') as file:
-                stream = target_window.text_edit.toPlainText()
-                file.write(stream)
+            self._write_file(path, target_window)
