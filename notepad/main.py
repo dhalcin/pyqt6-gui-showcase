@@ -12,9 +12,9 @@ from controllers import MainController
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('Notepad')
         self.setMinimumSize(750, 650)
         self.current_file_path = None
+        self.setWindowTitle('Untitled: Notepad')
 
         #Menubar 
         self.menu_bar = MenuBar(self)
