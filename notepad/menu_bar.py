@@ -1,6 +1,9 @@
 from PyQt6.QtWidgets import QMenuBar
+from PyQt6.QtCore import pyqtSignal
+from functools import partial
 
 class MenuBar(QMenuBar):
+    signal_actions = pyqtSignal(str)
     def __init__(self, parent = None):
         super().__init__(parent)
         self.main_windows = parent
@@ -59,4 +62,8 @@ class MenuBar(QMenuBar):
     
     def create_actions(self, menu_container, actions):
         for action_name, action_value in actions.items():
-            menu_container.addAction(action_value)
+            action = menu_container.addAction(action_value)
+            action.triggered.connect(
+                partial(self.signal_actions.emit, action_name)
+            )
+            #action.triggered.connect(lambda checked, name=action_name: self.signal_actions.emit(name))
