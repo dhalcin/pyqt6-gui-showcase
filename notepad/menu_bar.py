@@ -27,9 +27,10 @@ class MenuBar(QMenuBar):
 
     def _actions_dict(self):
         file_menu = {
-            "file": "New",
+            "new_file": "New File",
             "new_window": "New Window",
-            "open": "Open",
+            "open_file": "Open File",
+            "save": "Save",
             "save_as": "Save As",
             "print": "Print",
             "exit": "Exit"
@@ -66,4 +67,3 @@ class MenuBar(QMenuBar):
             action.triggered.connect(
                 partial(self.signal_actions.emit, action_name)
             )
-            #action.triggered.connect(lambda checked, name=action_name: self.signal_actions.emit(name))
