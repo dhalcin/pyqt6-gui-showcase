@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QFileDialog
-from PyQt6.QtCore import QTextStream, QFile
+from PyQt6.QtCore import QTextStream, QFile, QIODevice
 
 class FileServices:
     def __init__(self, main_window):
@@ -7,6 +7,20 @@ class FileServices:
 
     def open_file(self):
         file_path, _= QFileDialog.getOpenFileName(self.main_window, "Open File", "", "Text documents (*.txt);All files(*.*)")
-        if file_path:
-            with open(file_path, 'r') as file:
-                self.main_window.text_edit.setPlainText(file.read())
+        
+        if not file_path:
+            return
+        
+        file = QFile(file_path)
+        
+        if file.open(QIODevice.OpenModeFlag.ReadOnly | QIODevice.OpenModeFlag.Text):
+            try:    
+                stream = QTextStream(file)
+                self.main_window.text_edit.setPlainText(stream.readAll())
+            except Exception as e:
+                print(f"Error processing file : {file.errorString()}")
+            
+            finally:
+                file.close()
+        else:
+            print(f'Error when opening the file : {file.errorString}')
