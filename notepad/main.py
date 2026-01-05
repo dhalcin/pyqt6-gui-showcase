@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 from PyQt6.QtWidgets import (
     QMainWindow,
@@ -6,6 +7,7 @@ from PyQt6.QtWidgets import (
     QStatusBar,
 )
 from menu_bar import MenuBar
+from controllers import MainController
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -14,8 +16,8 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(750, 650)
 
         #Menubar 
-        menu_bar = MenuBar(self)
-        self.setMenuBar(menu_bar)
+        self.menu_bar = MenuBar(self)
+        self.setMenuBar(self.menu_bar)
 
         self.text_edit = QTextEdit()
 
@@ -29,6 +31,7 @@ class MainWindow(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
+    controller = MainController(window)
     window.show()
     sys.exit(app.exec())
 
