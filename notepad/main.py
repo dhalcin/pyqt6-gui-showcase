@@ -31,7 +31,7 @@ class MainWindow(QMainWindow):
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
-    controller = MainController(window)
+    controller = MainController(window, window_class=MainWindow)
     window.show()
     sys.exit(app.exec())
 
