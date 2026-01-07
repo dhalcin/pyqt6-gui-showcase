@@ -35,8 +35,8 @@ class MainController:
         actions_menu = {
             #"new_file": "new_file",
             "new_window": self.open_new_window,
-            "open_file": lambda: self.file_services.open_file(sender_window)
-            # "save",
+            "open_file": lambda: self.file_services.open_file(sender_window),
+            "save": lambda: self.file_services.save_file(sender_window)
             # "save_as",
             # "print",
             # "exit"
