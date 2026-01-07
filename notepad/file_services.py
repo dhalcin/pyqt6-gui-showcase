@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.QtCore import QTextStream, QFile, QIODevice
+import os
 
 class FileServices:
     def __init__(self):
@@ -15,7 +16,7 @@ class FileServices:
         if not file_path:
             return
 
-        self.temp_file_path = file_path
+        target_window.current_file_path = file_path
 
         file = QFile(file_path)
 
@@ -33,9 +34,13 @@ class FileServices:
 
 
     def save_file(self, target_window):
-        if self.temp_file_path:
-            with open(self.temp_file_path, 'w') as file:
+        file_path = target_window.current_file_path
+        if file_path:
+            with open(file_path, 'w') as file:
                 stream = target_window.text_edit.toPlainText()
                 file.write(stream)
         else:
-            print('Error file not found')
+            path = './new_file.txt'
+            with open(path, 'w') as file:
+                stream = target_window.text_edit.toPlainText()
+                file.write(stream)
