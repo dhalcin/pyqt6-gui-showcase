@@ -14,6 +14,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle('Notepad')
         self.setMinimumSize(750, 650)
+        self.current_file_path = None
 
         #Menubar 
         self.menu_bar = MenuBar(self)
