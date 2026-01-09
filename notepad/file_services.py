@@ -7,15 +7,18 @@ class FileServices:
     def new_file(self):
         print('selected action new_file')
 
+    def _set_title_window(self, file_path, target_window):
+        target_window.current_file_path = file_path # current_file_path is an instance atribute of MainWindow
+        name_file = Path(file_path).name
+        target_window.setWindowTitle(name_file)
+
     def open_file(self, target_window):
         file_path, _= QFileDialog.getOpenFileName(target_window, "Open File", "", "Text documents (*.txt);;All Files(*.*)")
         
         if not file_path:
             return
 
-        target_window.current_file_path = file_path # current_file_path es un atributo de instancia de MainWindow
-        name_file = Path(file_path).name
-        target_window.setWindowTitle(name_file)
+        self._set_title_window(file_path, target_window)
 
         file = QFile(file_path)
 
@@ -31,8 +34,9 @@ class FileServices:
         else:
             print(f'Error when opening the file : {file.errorString}')
 
-
     def _write_file(self, file_path, target_window):
+        self._set_title_window(file_path, target_window)
+
         file = QFile(file_path)
         if file.open(QIODevice.OpenModeFlag.WriteOnly | QIODevice.OpenModeFlag.Text):
             try:    
