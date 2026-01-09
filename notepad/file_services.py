@@ -1,5 +1,7 @@
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.QtCore import QTextStream, QFile, QIODevice
+from PyQt6.QtPrintSupport import QPrinter, QPrintDialog
+from PyQt6.QtGui import QTextDocument
 from pathlib import Path
 
 class FileServices:
@@ -62,3 +64,11 @@ class FileServices:
         if not file_path:
             return
         self._write_file(file_path, target_window)
+
+    def print_file(self, target_window):
+        printer = QPrinter(QPrinter.PrinterMode.HighResolution)
+        dialog = QPrintDialog(printer, target_window)
+
+        if dialog.exec() == QPrintDialog.DialogCode.Accepted:
+            target_window.text_edit.print(printer)
+        # agregar un mensaje en Statusbar para indicar que ya se imprimio el archivo
