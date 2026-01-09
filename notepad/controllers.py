@@ -28,7 +28,6 @@ class MainController:
     def _on_window_destroyed(self, window):
         if window in self.windows:
             self.windows.remove(window)
-            print(f"Ventana cerrada. Quedan: {len(self.windows)}")
 
     def _handle_menu_actions(self, action_name, sender_window):
         # Al usar sender_window, cada ventana es independiente
@@ -36,9 +35,9 @@ class MainController:
             #"new_file": "new_file",
             "new_window": self.open_new_window,
             "open_file": lambda: self.file_services.open_file(sender_window),
-            "save": lambda: self.file_services.save_file(sender_window)
-            # "save_as",
-            # "print",
+            "save": lambda: self.file_services.save_file(sender_window),
+            "save_as": lambda: self.file_services.save_as_file(sender_window),
+            "print": lambda: self.file_services.print_file(sender_window)
             # "exit"
         }
 
