@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.QtCore import QTextStream, QFile, QIODevice
 from pathlib import Path
-import os
 
 class FileServices:
     # menu bar services
@@ -56,7 +55,6 @@ class FileServices:
 
     def save_as_file(self, target_window):
         file_path, _= QFileDialog.getSaveFileName(target_window, "Save As File", ".txt", "Text documments (*.txt);;All Files(*.*)")
-        if Path(file_path).exists():
-            print('El archivo ya existe')
-        else:
-            print('el archivo no existe, guardando ..')
+        if not file_path:
+            return
+        self._write_file(file_path, target_window)
