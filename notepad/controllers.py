@@ -37,8 +37,8 @@ class MainController:
             "open_file": lambda: self.file_services.open_file(sender_window),
             "save": lambda: self.file_services.save_file(sender_window),
             "save_as": lambda: self.file_services.save_as_file(sender_window),
-            "print": lambda: self.file_services.print_file(sender_window)
-            # "exit"
+            "print": lambda: self.file_services.print_file(sender_window),
+            "exit": lambda: sender_window.close()
         }
 
         action = actions_menu.get(action_name)
