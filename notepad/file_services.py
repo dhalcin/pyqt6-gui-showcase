@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import QFileDialog
 from PyQt6.QtCore import QTextStream, QFile, QIODevice
 from PyQt6.QtPrintSupport import QPrinter, QPrintDialog
-from PyQt6.QtGui import QTextDocument
 from pathlib import Path
 
 class FileServices:
@@ -52,12 +51,12 @@ class FileServices:
             print(f'Error when opening the file : {file.errorString}')    
 
     def save_file(self, target_window):
-        file_path = target_window.current_file_path
-        if file_path:
-            self._write_file(file_path, target_window)
-        else:
-            path = './new_file.txt'
-            self._write_file(path, target_window)
+        file_path = target_window.current_file_path # at this point current_file_path has a value of None
+        if not file_path:
+            self.save_as_file(target_window)
+            return
+        
+        self._write_file(file_path, target_window)
 
     def save_as_file(self, target_window):
         file_path, _= QFileDialog.getSaveFileName(target_window, "Save As File", ".txt", "Text documments (*.txt);;All Files(*.*)")
