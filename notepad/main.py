@@ -31,7 +31,6 @@ class MainWindow(QMainWindow):
 
         self.status_bar.showMessage('notepad', 0)
 
-# Cambiado de classEvent a closeEvent
     def closeEvent(self, event): 
         if self.text_edit.document().isModified():
             response = QMessageBox.question(
