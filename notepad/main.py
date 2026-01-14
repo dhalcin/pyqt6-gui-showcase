@@ -31,32 +31,26 @@ class MainWindow(QMainWindow):
 
         self.status_bar.showMessage('notepad', 0)
 
-    def closeEvent(self, event):
+# Cambiado de classEvent a closeEvent
+    def closeEvent(self, event): 
         if self.text_edit.document().isModified():
             response = QMessageBox.question(
                 self,
-                "Guardar Cambios",
-                "El Documento ha sido modificado. ¿Deseas guardar los cambios?",
+                "Save As",
+                "The Document has been modified. ¿You want to save the changes?",
                 QMessageBox.StandardButton.Save |
                 QMessageBox.StandardButton.Discard |
                 QMessageBox.StandardButton.Cancel
             )
 
             if response == QMessageBox.StandardButton.Save:
-                # We emit the save signal
+                # We emit the signal for the controller to handle
                 self.menu_bar.signal_actions.emit("save")
-                
-                # We check if it was actually saved, the document should no longer be marked as modified
-                if not self.text_edit.document().isModified():
-                    event.accept()
-                else:
-                    # If the user canceled the "Save As" dialog, we do not close
-                    event.ignore() 
-                    
-            elif response == QMessageBox.StandardButton.Discard:
-                event.accept() # Close without saving
+                event.accept()
+            elif response == QMessageBox.StandardButton.Cancel:
+                event.ignore()  # Stops closing
             else:
-                event.ignore() # Cancel: stays in the window
+                event.accept()  # Close without saving (Discard)
         else:
             event.accept()
 
