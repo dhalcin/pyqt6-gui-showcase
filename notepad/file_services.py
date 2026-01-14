@@ -43,6 +43,8 @@ class FileServices:
             try:    
                 stream = QTextStream(file)
                 stream << target_window.text_edit.toPlainText()
+                # In MainWindow setModified True was defined, since the file was already saved then setModified is False
+                target_window.text_edit.document().setModified(False)
             except Exception as e:
                 print(f"Error processing file : {file.errorString()}")
             finally:
