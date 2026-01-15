@@ -1,11 +1,13 @@
 from PyQt6.QtCore import Qt
 from file_services import FileServices
+from view_window import View
 
 class MainController:
     def __init__(self, view, window_class):
         self.view = view
         self.window_class = window_class
         self.file_services = FileServices()
+        self.view_window = View()
         self.windows = []
         self._setup_window(self.view)
         
@@ -32,13 +34,17 @@ class MainController:
     def _handle_menu_actions(self, action_name, sender_window):
         # Al usar sender_window, cada ventana es independiente
         actions_menu = {
+            # Menu File
             #"new_file": "new_file",
             "new_window": self.open_new_window,
             "open_file": lambda: self.file_services.open_file(sender_window),
             "save": lambda: self.file_services.save_file(sender_window),
             "save_as": lambda: self.file_services.save_as_file(sender_window),
             "print": lambda: self.file_services.print_file(sender_window),
-            "exit": sender_window.close
+            "exit": sender_window.close,
+            
+            # Menu Edit
+            "find": lambda: self.view_window.find_content(sender_window)
         }
 
         action = actions_menu.get(action_name)
