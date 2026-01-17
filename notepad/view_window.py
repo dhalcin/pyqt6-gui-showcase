@@ -56,4 +56,6 @@ class View:
         msg.exec()   
 
     def find_content(self, target_window):
-        self._dialog(target_window, 'Search', ['Search'], QLineEdit())
+        # If the content of text_edit is not empty, the search is performed
+        if target_window.text_edit.toPlainText() != '':
+            self._dialog(target_window, 'Search', ['Search'], QLineEdit())
