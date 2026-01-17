@@ -3,7 +3,8 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QLineEdit,
     QPushButton,
-    QMessageBox
+    QMessageBox,
+    QFontDialog
 )
 
 class View:
@@ -59,3 +60,9 @@ class View:
         # If the content of text_edit is not empty, the search is performed
         if target_window.text_edit.toPlainText() != '':
             self._dialog(target_window, 'Search', ['Search'], QLineEdit())
+    
+    def change_font(self, target_window):
+        # Native Qt styles
+        font, ok = QFontDialog.getFont(target_window.text_edit.font(), target_window)
+        if ok:
+            target_window.text_edit.setFont(font)
