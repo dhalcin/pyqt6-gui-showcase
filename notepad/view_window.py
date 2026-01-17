@@ -1,4 +1,10 @@
-from PyQt6.QtWidgets import QDialog, QVBoxLayout, QLineEdit, QPushButton
+from PyQt6.QtWidgets import (
+    QDialog,
+    QVBoxLayout,
+    QLineEdit,
+    QPushButton,
+    QMessageBox
+)
 
 class View:
     def _dialog(self, target_window, title, text_button, widget=None):
@@ -18,7 +24,8 @@ class View:
             button.setFixedSize(45, 25)
             # Menu find dialog box
             if text == 'Search':
-                self._button_action(button, lambda: self._search_content(widget, target_window, dialog))  # widget = QLineEdit()
+                button.clicked.connect(lambda: self._search_content(widget, target_window, dialog)) # widget = QLineEdit()
+            
             layout.addWidget(button)
         
         dialog.setLayout(layout)
@@ -36,9 +43,17 @@ class View:
         
         if found:
             dialog.close()
-
-    def _button_action(self, button, action):
-        button.clicked.connect(action)
+            return
+        
+        self._message_box(target_window)
+    
+    def _message_box(self, target_window):
+        msg = QMessageBox(target_window)
+        msg.setIcon(QMessageBox.Icon.Warning)
+        msg.setText("The contents were not found")
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.setDefaultButton(QMessageBox.StandardButton.Cancel)
+        msg.exec()   
 
     def find_content(self, target_window):
         self._dialog(target_window, 'Search', ['Search'], QLineEdit())
