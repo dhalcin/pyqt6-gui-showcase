@@ -1,0 +1,12 @@
+#Search {
+    border-radius: 1px;
+}
+
+#Other-Fonts {
+    min-width: 90px;
+}
+
+[class='btn']:focus {
+    border: 2px solid #0078d7;
+    outline: none;
+}
