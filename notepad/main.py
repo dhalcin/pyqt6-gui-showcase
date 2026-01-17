@@ -53,9 +53,18 @@ class MainWindow(QMainWindow):
         else:
             event.accept()
 
+def load_styles(app):
+    try:
+        with open('./styles/styles.qss', 'r') as file:
+            # print(file.read())
+            app.setStyleSheet(file.read())
+    except FileNotFoundError:
+        print('File not found')
+
 def main():
     app = QApplication(sys.argv)
     window = MainWindow()
+    load_styles(app)
     controller = MainController(window, window_class=MainWindow)
     window.show()
     sys.exit(app.exec())
