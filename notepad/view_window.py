@@ -34,6 +34,12 @@ class View:
             if text == 'Search':
                 button.clicked.connect(lambda: self._search_content(widget, target_window, dialog)) # widget = QLineEdit()
             
+            elif text == 'Qt':
+                button.clicked.connect(lambda: self._font_qt(target_window, dialog))
+                
+            elif text == 'Other Fonts':
+                button.clicked.connect(lambda: self._other_fonts(target_window, dialog))
+
             buttons_container.addWidget(button)
         layout.addLayout(buttons_container)
         
@@ -69,8 +75,23 @@ class View:
         if target_window.text_edit.toPlainText() != '':
             self._dialog(target_window, 'Search', ['Search'], [QLineEdit()])
     
-    def change_font(self, target_window):
-        #Native Qt styles
+    def _font_qt(self, target_window, dialog):
+        # Native Qt styles
         font, ok = QFontDialog.getFont(target_window.text_edit.font(), target_window)
         if ok:
             target_window.text_edit.setFont(font)
+            dialog.close()
+
+    def _other_fonts(self, target_window, dialog):
+        font_id = QFontDatabase.addApplicationFont('./styles/fonts/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf')
+        if font_id < 0:
+            print('Failed to laod font')
+        
+        families = QFontDatabase.applicationFontFamilies(font_id)
+        font_family = families[0]
+        target_window.text_edit.setFont(QFont(font_family))
+        dialog.close()
+
+    def change_font(self, target_window):
+        self._dialog(target_window, 'Fonts', ['Qt', 'Other Fonts'],[QLabel('To change the font, you can choose between these 2 options')])
+
