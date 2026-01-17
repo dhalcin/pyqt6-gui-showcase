@@ -44,7 +44,10 @@ class MainController:
             "exit": sender_window.close,
             
             # Menu Edit
-            "find": lambda: self.view_window.find_content(sender_window)
+            "find": lambda: self.view_window.find_content(sender_window),
+
+            # Menu Format
+            "font": lambda: self.view_window.change_font(sender_window)
         }
 
         action = actions_menu.get(action_name)
