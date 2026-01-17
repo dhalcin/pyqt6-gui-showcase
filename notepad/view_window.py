@@ -4,18 +4,23 @@ from PyQt6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QMessageBox,
-    QFontDialog
+    QFontDialog,
+    QLabel,
+    QHBoxLayout
 )
+from PyQt6.QtGui import QFont, QFontDatabase
 
 class View:
-    def _dialog(self, target_window, title, text_button, widget=None):
+    def _dialog(self, target_window, title, text_button, widgets=None):
         dialog = QDialog(target_window)
         dialog.setWindowTitle(title)
         layout = QVBoxLayout()
 
-        if widget:
-            layout.addWidget(widget)
+        if widgets:
+            for widget in widgets:
+                layout.addWidget(widget)
         
+        buttons_container = QHBoxLayout()
         for text in text_button:
             button = QPushButton(
                 text=text,
@@ -23,11 +28,14 @@ class View:
             )
 
             button.setFixedSize(45, 25)
+            button.setProperty('class', 'btn')
+            button.setObjectName(text.replace(' ', '-'))
             # Menu find dialog box
             if text == 'Search':
                 button.clicked.connect(lambda: self._search_content(widget, target_window, dialog)) # widget = QLineEdit()
             
-            layout.addWidget(button)
+            buttons_container.addWidget(button)
+        layout.addLayout(buttons_container)
         
         dialog.setLayout(layout)
         dialog.exec()
@@ -59,10 +67,10 @@ class View:
     def find_content(self, target_window):
         # If the content of text_edit is not empty, the search is performed
         if target_window.text_edit.toPlainText() != '':
-            self._dialog(target_window, 'Search', ['Search'], QLineEdit())
+            self._dialog(target_window, 'Search', ['Search'], [QLineEdit()])
     
     def change_font(self, target_window):
-        # Native Qt styles
+        #Native Qt styles
         font, ok = QFontDialog.getFont(target_window.text_edit.font(), target_window)
         if ok:
             target_window.text_edit.setFont(font)
