@@ -10,3 +10,7 @@
     border: 2px solid #0078d7;
     outline: none;
 }
+
+[class='changes'] {
+    border: 2px solid grey;
+}
