@@ -7,9 +7,11 @@ from PyQt6.QtWidgets import (
     QFontDialog,
     QLabel,
     QHBoxLayout,
-    QComboBox
+    QComboBox,
+    QFrame
 )
 from PyQt6.QtGui import QFont, QFontDatabase
+from PyQt6.QtCore import Qt
 from functools import partial
 import os
 
@@ -96,9 +98,11 @@ class View:
         
         font_container = QVBoxLayout()
         title_font = QLabel('Font :')
+        title_font.setFixedHeight(20)
         font_combobox = QComboBox()
 
-        files = os.listdir('./styles/fonts')
+        styles_path = './styles/fonts'
+        files = os.listdir(styles_path)
         font_combobox.addItems(files)
 
         font_container.addWidget(title_font)
@@ -106,8 +110,9 @@ class View:
 
         size_container = QVBoxLayout()
         size_title = QLabel('Size :')
+        size_title.setFixedHeight(20)
         size_combobox = QComboBox()
-        size_combobox.addItems([str(x) for x in range(8, 73, 2)])
+        size_combobox.addItems([str(x) for x in range(8, 31, 2)])
 
         size_container.addWidget(size_title)
         size_container.addWidget(size_combobox)
@@ -118,28 +123,51 @@ class View:
         buttons_container = QHBoxLayout()
         options = {'apply': 'Apply', 'cancel': 'Cancel'}
 
-        buttons = []
+        preview_frame = QFrame()
+        preview_frame.setProperty('class', 'changes')
+        
+        preview_layout = QVBoxLayout(preview_frame)
+        preview_frame.setFixedHeight(100)
+        show_changes = QLabel('ABCDEXYZ')
+
+        show_changes.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        preview_layout.addWidget(show_changes)
 
         def apply_fonts(btn_text, font_dialog):
             if btn_text != 'Apply':
                 font_dialog.close()
                 return
+            
+            selected_font = font_combobox.currentText()
+            path_selected_font = f'{styles_path}/{selected_font}'
+            font_id = QFontDatabase.addApplicationFont(path_selected_font)
+
+            if font_id < 0:
+                print('Failed to load font')
+            
+            families = QFontDatabase.applicationFontFamilies(font_id)
+            font_family = families[0]
+            target_window.text_edit.setFont(QFont(font_family))
+
+            font_dialog.close()
+            dialog.close()
 
         for btn_text in options.values():
             button = QPushButton(text=btn_text, parent=font_dialog)
             button.setProperty('class', 'btn')
-            buttons.append(button)
             buttons_container.addWidget(button)
             # Partial use to avoid : Late Binding Closures
             button.clicked.connect(partial(apply_fonts, btn_text, font_dialog))
 
+        
         layout.addLayout(combobox_container)
+        layout.addWidget(preview_frame)
         layout.addLayout(buttons_container)
 
         font_dialog.setLayout(layout)
         font_dialog.exec()
 
-        dialog.close()
+        #dialog.close()
 
 
     def change_font(self, target_window):
