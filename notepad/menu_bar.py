@@ -43,8 +43,7 @@ class MenuBar(QMenuBar):
         }
         
         format_menu = {
-            "font": "Font",
-            "size": "Size"
+            "font": "Font"
         }
 
         view_menu = {
@@ -76,8 +75,7 @@ class MenuBar(QMenuBar):
         }
         
         format_menu = {
-            "font": "Ctrl + F",
-            "size": "Ctrl + E"
+            "font": "Ctrl + F"
         }
 
         view_menu = {
