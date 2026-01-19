@@ -6,9 +6,12 @@ from PyQt6.QtWidgets import (
     QMessageBox,
     QFontDialog,
     QLabel,
-    QHBoxLayout
+    QHBoxLayout,
+    QComboBox
 )
 from PyQt6.QtGui import QFont, QFontDatabase
+from functools import partial
+import os
 
 class View:
     def _dialog(self, target_window, title, text_button, widgets=None):
@@ -83,14 +86,61 @@ class View:
             dialog.close()
 
     def _other_fonts(self, target_window, dialog):
-        font_id = QFontDatabase.addApplicationFont('./styles/fonts/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf')
-        if font_id < 0:
-            print('Failed to laod font')
+        font_dialog = QDialog()
+        font_dialog.setWindowTitle('Fonts')
+        font_dialog.setFixedSize(400, 300)
+
+        layout = QVBoxLayout()
         
-        families = QFontDatabase.applicationFontFamilies(font_id)
-        font_family = families[0]
-        target_window.text_edit.setFont(QFont(font_family))
+        combobox_container = QHBoxLayout()
+        
+        font_container = QVBoxLayout()
+        title_font = QLabel('Font :')
+        font_combobox = QComboBox()
+
+        files = os.listdir('./styles/fonts')
+        font_combobox.addItems(files)
+
+        font_container.addWidget(title_font)
+        font_container.addWidget(font_combobox)
+
+        size_container = QVBoxLayout()
+        size_title = QLabel('Size :')
+        size_combobox = QComboBox()
+        size_combobox.addItems([str(x) for x in range(8, 73, 2)])
+
+        size_container.addWidget(size_title)
+        size_container.addWidget(size_combobox)
+
+        combobox_container.addLayout(font_container)
+        combobox_container.addLayout(size_container)
+
+        buttons_container = QHBoxLayout()
+        options = {'apply': 'Apply', 'cancel': 'Cancel'}
+
+        buttons = []
+
+        def apply_fonts(btn_text, font_dialog):
+            if btn_text != 'Apply':
+                font_dialog.close()
+                return
+
+        for btn_text in options.values():
+            button = QPushButton(text=btn_text, parent=font_dialog)
+            button.setProperty('class', 'btn')
+            buttons.append(button)
+            buttons_container.addWidget(button)
+            # Partial use to avoid : Late Binding Closures
+            button.clicked.connect(partial(apply_fonts, btn_text, font_dialog))
+
+        layout.addLayout(combobox_container)
+        layout.addLayout(buttons_container)
+
+        font_dialog.setLayout(layout)
+        font_dialog.exec()
+
         dialog.close()
+
 
     def change_font(self, target_window):
         self._dialog(target_window, 'Fonts', ['Qt', 'Other Fonts'],[QLabel('To change the font, you can choose between these 2 options')])
