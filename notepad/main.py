@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
 
         self.status_bar.showMessage('notepad', 0)
 
+    # The closeEvent method controls the event of closing the window, that is, the "x" icon of sald window
     def closeEvent(self, event): 
         if self.text_edit.document().isModified():
             response = QMessageBox.question(
