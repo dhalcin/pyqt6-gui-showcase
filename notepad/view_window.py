@@ -156,9 +156,12 @@ class View:
             button = QPushButton(text=btn_text, parent=font_dialog)
             button.setProperty('class', 'btn')
             buttons_container.addWidget(button)
-            # Partial use to avoid : Late Binding Closures
+        
+            # Using partial to avoid "Late Binding": freezes 
+            # the arguments # (btn_text and font_dialog) in each 
+            # iteration of the loop so that # each button maintains 
+            # its correct value when clicked.
             button.clicked.connect(partial(apply_fonts, btn_text, font_dialog))
-
         
         layout.addLayout(combobox_container)
         layout.addWidget(preview_frame)
