@@ -132,7 +132,36 @@ class View:
 
         show_changes.setAlignment(Qt.AlignmentFlag.AlignCenter)
         preview_layout.addWidget(show_changes)
+        
+        def select_fonts():
+            selected_font = font_combobox.currentText().strip()
+            path_selected_fond = f'{styles_path}/{selected_font}'
+            font_id = QFontDatabase.addApplicationFont(path_selected_fond)
 
+            if font_id < 0:
+                print('Faild to load fond in label')
+
+            families = QFontDatabase.applicationFontFamilies(font_id)
+            font_family = families[0]
+
+            avaible_styles = QFontDatabase.styles(font_family)
+
+            font = QFont(font_family)
+
+            print(selected_font)
+
+            
+            if "Bold" in selected_font:
+                print("Bold select_fonts function")
+                font.setBold(True)
+
+            if "Italic" in selected_font:
+                print("Italic select_fotns function")
+                font.setItalic(True)
+
+            show_changes.setFont(QFont(font))
+
+        font_combobox.currentTextChanged.connect(select_fonts)
 
         def apply_fonts(btn_text, font_dialog):
             if btn_text != 'Apply':
