@@ -133,6 +133,7 @@ class View:
         show_changes.setAlignment(Qt.AlignmentFlag.AlignCenter)
         preview_layout.addWidget(show_changes)
 
+
         def apply_fonts(btn_text, font_dialog):
             if btn_text != 'Apply':
                 font_dialog.close()
@@ -147,7 +148,20 @@ class View:
             
             families = QFontDatabase.applicationFontFamilies(font_id)
             font_family = families[0]
-            target_window.text_edit.setFont(QFont(font_family))
+
+            #avaible_styles = QFontDatabase.styles(font_family)
+
+            font = QFont(font_family)
+
+            if "Bold" in selected_font:
+                print("BOLD")
+                font.setBold(True)
+
+            if "Italic" in selected_font:
+                print("Italic")
+                font.setItalic(True)
+
+            target_window.text_edit.setFont(font)
 
             font_dialog.close()
             dialog.close()
