@@ -133,7 +133,7 @@ class View:
         show_changes.setAlignment(Qt.AlignmentFlag.AlignCenter)
         preview_layout.addWidget(show_changes)
         
-        def select_fonts():
+        def update_label_font_preview():
             selected_font = font_combobox.currentText()#.strip()
             path_selected_fond = f'{styles_path}/{selected_font}'
             font_id = QFontDatabase.addApplicationFont(path_selected_fond)
@@ -148,7 +148,7 @@ class View:
             
             show_changes.setFont(QFont(font))
 
-        font_combobox.currentTextChanged.connect(select_fonts)
+        font_combobox.currentTextChanged.connect(update_label_font_preview)
 
         def apply_fonts(btn_text, font_dialog):
             if btn_text != 'Apply':
