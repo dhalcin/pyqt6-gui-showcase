@@ -134,7 +134,7 @@ class View:
         preview_layout.addWidget(show_changes)
         
         def select_fonts():
-            selected_font = font_combobox.currentText().strip()
+            selected_font = font_combobox.currentText()#.strip()
             path_selected_fond = f'{styles_path}/{selected_font}'
             font_id = QFontDatabase.addApplicationFont(path_selected_fond)
 
@@ -144,21 +144,8 @@ class View:
             families = QFontDatabase.applicationFontFamilies(font_id)
             font_family = families[0]
 
-            avaible_styles = QFontDatabase.styles(font_family)
-
             font = QFont(font_family)
-
-            print(selected_font)
-
             
-            if "Bold" in selected_font:
-                print("Bold select_fonts function")
-                font.setBold(True)
-
-            if "Italic" in selected_font:
-                print("Italic select_fotns function")
-                font.setItalic(True)
-
             show_changes.setFont(QFont(font))
 
         font_combobox.currentTextChanged.connect(select_fonts)
@@ -178,17 +165,7 @@ class View:
             families = QFontDatabase.applicationFontFamilies(font_id)
             font_family = families[0]
 
-            #avaible_styles = QFontDatabase.styles(font_family)
-
             font = QFont(font_family)
-
-            if "Bold" in selected_font:
-                print("BOLD")
-                font.setBold(True)
-
-            if "Italic" in selected_font:
-                print("Italic")
-                font.setItalic(True)
 
             target_window.text_edit.setFont(font)
 
