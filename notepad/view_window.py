@@ -65,12 +65,12 @@ class View:
             dialog.close()
             return
         
-        self._message_box(target_window)
+        self._message_box(target_window, "The contents were not found")
     
-    def _message_box(self, target_window):
+    def _message_box(self, target_window, message):
         msg = QMessageBox(target_window)
         msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setText("The contents were not found")
+        msg.setText(message)
         msg.setStandardButtons(QMessageBox.StandardButton.Ok)
         msg.setDefaultButton(QMessageBox.StandardButton.Cancel)
         msg.exec()   
@@ -139,8 +139,9 @@ class View:
             font_id = QFontDatabase.addApplicationFont(path_selected_fond)
 
             if font_id < 0:
-                print('Error loading font')
-
+                self._message_box(target_window, "Error loading Font")
+                return
+        
             families = QFontDatabase.applicationFontFamilies(font_id)
             font_family = families[0]
             
