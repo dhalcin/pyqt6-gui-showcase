@@ -132,21 +132,22 @@ class View:
 
         show_changes.setAlignment(Qt.AlignmentFlag.AlignCenter)
         preview_layout.addWidget(show_changes)
-        
-        def update_label_font_preview():
-            selected_font = font_combobox.currentText()#.strip()
+
+        def change_font():
+            selected_font = font_combobox.currentText()
             path_selected_fond = f'{styles_path}/{selected_font}'
             font_id = QFontDatabase.addApplicationFont(path_selected_fond)
 
             if font_id < 0:
-                print('Faild to load fond in label')
+                print('Error loading font')
 
             families = QFontDatabase.applicationFontFamilies(font_id)
             font_family = families[0]
-
-            font = QFont(font_family)
             
-            show_changes.setFont(QFont(font))
+            return QFont(font_family)
+        
+        def update_label_font_preview():
+            show_changes.setFont(change_font())
 
         font_combobox.currentTextChanged.connect(update_label_font_preview)
 
@@ -155,19 +156,7 @@ class View:
                 font_dialog.close()
                 return
             
-            selected_font = font_combobox.currentText()
-            path_selected_font = f'{styles_path}/{selected_font}'
-            font_id = QFontDatabase.addApplicationFont(path_selected_font)
-
-            if font_id < 0:
-                print('Failed to load font')
-            
-            families = QFontDatabase.applicationFontFamilies(font_id)
-            font_family = families[0]
-
-            font = QFont(font_family)
-
-            target_window.text_edit.setFont(font)
+            target_window.text_edit.setFont(change_font())
 
             font_dialog.close()
             dialog.close()
