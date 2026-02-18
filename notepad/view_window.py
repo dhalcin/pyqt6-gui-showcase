@@ -135,6 +135,7 @@ class View:
 
         def change_font():
             selected_font = font_combobox.currentText()
+            selected_size = size_combobox.currentText()
             path_selected_fond = f'{styles_path}/{selected_font}'
             font_id = QFontDatabase.addApplicationFont(path_selected_fond)
 
@@ -145,12 +146,13 @@ class View:
             families = QFontDatabase.applicationFontFamilies(font_id)
             font_family = families[0]
             
-            return QFont(font_family)
+            return QFont(font_family, int(selected_size))
         
         def update_label_font_preview():
             show_changes.setFont(change_font())
 
         font_combobox.currentTextChanged.connect(update_label_font_preview)
+        size_combobox.currentIndexChanged.connect(update_label_font_preview)
 
         def apply_fonts(btn_text, font_dialog):
             if btn_text != 'Apply':
