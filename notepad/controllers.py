@@ -50,7 +50,8 @@ class MainController:
             "font": lambda: self.view_window.change_font(sender_window),
 
             "zoom_in": lambda: self.view_window.zoom_in(sender_window),
-            "zoom_out": lambda: self.view_window.zoom_out(sender_window)
+            "zoom_out": lambda: self.view_window.zoom_out(sender_window),
+            "restore": lambda: self.view_window.restore_zoom(sender_window)
         }
 
         action = actions_menu.get(action_name)
