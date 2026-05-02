@@ -51,7 +51,9 @@ class MainController:
 
             "zoom_in": lambda: self.view_window.zoom_in(sender_window),
             "zoom_out": lambda: self.view_window.zoom_out(sender_window),
-            "restore": lambda: self.view_window.restore_zoom(sender_window)
+            "restore": lambda: self.view_window.restore_zoom(sender_window),
+
+            "about": lambda: self.view_window.about()
         }
 
         action = actions_menu.get(action_name)
