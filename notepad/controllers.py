@@ -47,7 +47,10 @@ class MainController:
             "find": lambda: self.view_window.find_content(sender_window),
 
             # Menu Format
-            "font": lambda: self.view_window.change_font(sender_window)
+            "font": lambda: self.view_window.change_font(sender_window),
+
+            "zoom_in": lambda: self.view_window.zoom_in(sender_window),
+            "zoom_out": lambda: self.view_window.zoom_out(sender_window)
         }
 
         action = actions_menu.get(action_name)
