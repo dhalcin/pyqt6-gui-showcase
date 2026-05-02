@@ -20,6 +20,7 @@ class View:
     DEFAULT_ZOOM = 0
     MIN_ZOOM = -2
     MAX_ZOOM = 32
+    # DEFAULT_SIZE = 9
 
     def __init__(self):
         self.zoom_level = self.DEFAULT_ZOOM
@@ -207,3 +208,8 @@ class View:
         if self.zoom_level > View.MIN_ZOOM:
             target_window.text_edit.zoomOut(1)
             self.zoom_level -= 1
+
+    def restore_zoom(self, target_window):
+        font = target_window.text_edit.font()
+        font.setPointSize(9)
+        target_window.text_edit.setFont(font)
