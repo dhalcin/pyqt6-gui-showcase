@@ -10,8 +10,8 @@ from PyQt6.QtWidgets import (
     QComboBox,
     QFrame
 )
-from PyQt6.QtGui import QFont, QFontDatabase
-from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFont, QFontDatabase, QDesktopServices
+from PyQt6.QtCore import Qt, QUrl
 from functools import partial
 import os
 
@@ -213,3 +213,6 @@ class View:
         font = target_window.text_edit.font()
         font.setPointSize(9)
         target_window.text_edit.setFont(font)
+
+    def about(self):
+        QDesktopServices.openUrl(QUrl("https://github.com/dhalcin/pyqt6-gui-showcase"))
