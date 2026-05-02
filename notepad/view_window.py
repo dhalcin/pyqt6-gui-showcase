@@ -16,10 +16,21 @@ from functools import partial
 import os
 
 class View:
+
+    DEFAULT_ZOOM = 0
+    MIN_ZOOM = -2
+    MAX_ZOOM = 32
+
+    def __init__(self):
+        self.zoom_level = self.DEFAULT_ZOOM
+
     def _dialog(self, target_window, title, text_button, widgets=None):
         dialog = QDialog(target_window)
         dialog.setWindowTitle(title)
         layout = QVBoxLayout()
+
+
+        # Size
 
         if widgets:
             for widget in widgets:
@@ -184,7 +195,15 @@ class View:
 
         #dialog.close()
 
-
     def change_font(self, target_window):
         self._dialog(target_window, 'Fonts', ['Qt', 'Other Fonts'],[QLabel('To change the font, you can choose between these 2 options')])
 
+    def zoom_in(self, target_window):
+        if self.zoom_level < View.MAX_ZOOM:
+            target_window.text_edit.zoomIn(1)
+            self.zoom_level += 1
+
+    def zoom_out(self, target_window):
+        if self.zoom_level > View.MIN_ZOOM:
+            target_window.text_edit.zoomOut(1)
+            self.zoom_level -= 1
