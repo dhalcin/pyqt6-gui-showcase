@@ -1,18 +1,11 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle("Calculator")
-        self.setMaximumSize(50, 40)
-
-
+from PyQt6.QtWidgets import QApplication
+from view import View
+        
 def main():
     app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
+    view = View()
+    view.show()
     sys.exit(app.exec())
 
 if __name__ == "__main__":
