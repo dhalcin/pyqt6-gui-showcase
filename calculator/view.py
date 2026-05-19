@@ -33,7 +33,6 @@ class View(QMainWindow):
 
         self.main_layout.addWidget(self.display)
 
-
-
+   
 
         
