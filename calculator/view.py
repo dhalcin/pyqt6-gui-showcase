@@ -3,7 +3,9 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QTextEdit,
-    QLineEdit
+    QLineEdit,
+    QGridLayout,
+    QPushButton
 )
 
 class View(QMainWindow):
@@ -33,6 +35,34 @@ class View(QMainWindow):
 
         self.main_layout.addWidget(self.display)
 
-   
+        # keys
+        self.keys = QWidget()
+        self.layout_keys = QGridLayout()
 
-        
+        operations = {
+            "C": (0, 0),
+            "<<": (0, 1),
+            "%": (0, 2),
+            "/": (0, 3),
+            "X": (1, 4),
+            "-": (2, 4),
+            "+": (3, 4),
+            "=": (4, 4) 
+        }
+
+        for num in range(0, 21):
+            self.button = QPushButton()
+            
+            row = num // 4
+            column = num % 4
+
+            if (row, column) == operations[num]:
+                self.button.setText(operations)
+            else:
+                self.button.setText(str(num))
+
+            self.layout_keys.addWidget(self.button, row, column)
+
+        self.keys.setLayout(self.layout_keys)
+
+        self.main_layout.addWidget(self.keys)
