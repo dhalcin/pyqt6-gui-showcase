@@ -40,15 +40,17 @@ class View(QMainWindow):
         self.layout_keys = QGridLayout()
 
         operations = {
-            "C": (0, 0),
-            "<<": (0, 1),
-            "%": (0, 2),
-            "/": (0, 3),
-            "X": (1, 4),
-            "-": (2, 4),
-            "+": (3, 4),
-            "=": (4, 4) 
+            (0, 0): "C",
+            (0, 1): "<",
+            (0, 2): "%",
+            (0, 3): "/",
+            (1, 3): "X",
+            (2, 3): "-",
+            (3, 3): "+",
+            (4, 3): "="
         }
+        
+        flag = 0
 
         for num in range(0, 21):
             self.button = QPushButton()
@@ -56,10 +58,11 @@ class View(QMainWindow):
             row = num // 4
             column = num % 4
 
-            if (row, column) == operations[num]:
-                self.button.setText(operations)
+            if (row, column) in operations:
+                self.button.setText(operations[(row, column)])
             else:
-                self.button.setText(str(num))
+                flag += 1
+                self.button.setText(str(flag))
 
             self.layout_keys.addWidget(self.button, row, column)
 
