@@ -38,33 +38,30 @@ class View(QMainWindow):
         # keys
         self.keys = QWidget()
         self.layout_keys = QGridLayout()
-
-        operations = {
-            (0, 0): "C",
-            (0, 1): "<",
-            (0, 2): "%",
-            (0, 3): "/",
-            (1, 3): "X",
-            (2, 3): "-",
-            (3, 3): "+",
-            (4, 3): "="
-        }
         
-        flag = 0
+        symbols = {
+            "file_1": ["C", "<", "%", "/"],
+            "file_2": ["1", "2", "3", "X"],
+            "file_3": ["4", "5", "6", "-"],
+            "file_4": ["7", "8", "9", "+"],
+            "file_5": ["0", ".", "="]
+        }
 
-        for num in range(0, 21):
-            self.button = QPushButton()
-            
-            row = num // 4
-            column = num % 4
+        i = 0
 
-            if (row, column) in operations:
-                self.button.setText(operations[(row, column)])
-            else:
-                flag += 1
-                self.button.setText(str(flag))
-
-            self.layout_keys.addWidget(self.button, row, column)
+        for files in symbols.values():
+            for ch in range(0, len(files)):         
+                row = i // 4
+                column = i % 4
+                i += 1
+                self.button = QPushButton()
+                
+                if files[ch] == "=":
+                    self.layout_keys.addWidget(self.button, 4, 2, 1, 2)
+                    
+                else:
+                    self.layout_keys.addWidget(self.button, row, column)
+                self.button.setText(files[ch])
 
         self.keys.setLayout(self.layout_keys)
 
