@@ -2,11 +2,12 @@ from PyQt6.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
     QWidget,
-    QTextEdit,
     QLineEdit,
+    QSizePolicy,
     QGridLayout,
     QPushButton
 )
+from PyQt6.QtCore import Qt
 
 class View(QMainWindow):
     def __init__(self):
@@ -19,25 +20,40 @@ class View(QMainWindow):
         self.setCentralWidget(central_widget)
 
         self.main_layout = QVBoxLayout()
+        self.main_layout.setContentsMargins(10, 10, 10, 10)
+        self.main_layout.setSpacing(10)
         central_widget.setLayout(self.main_layout)
 
         # Display
         self.display = QWidget()
         self.layout_display = QVBoxLayout()
+        self.layout_display.setContentsMargins(0, 0, 0, 0)
+        self.layout_display.setSpacing(0)
 
-        self.text_edit = QTextEdit()
-        self.line_edit = QLineEdit()
+        self.historial_line = QLineEdit()
 
-        self.layout_display.addWidget(self.text_edit)
-        self.layout_display.addWidget(self.line_edit)
+        self.historial_line.setReadOnly(True)
+        self.historial_line.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.historial_line.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+
+        self.input_line = QLineEdit()
+
+        self.input_line.setReadOnly(False)
+        self.input_line.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
+        self.input_line.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+
+        self.layout_display.addWidget(self.historial_line, stretch=1)
+        self.layout_display.addWidget(self.input_line, stretch=2)
 
         self.display.setLayout(self.layout_display)
 
-        self.main_layout.addWidget(self.display)
+        self.main_layout.addWidget(self.display, stretch=2)
 
         # keys
         self.keys = QWidget()
         self.layout_keys = QGridLayout()
+        self.layout_keys.setContentsMargins(0, 0, 0, 0)
+        self.layout_keys.setSpacing(1)
         
         symbols = {
             "file_1": ["C", "<", "%", "/"],
@@ -54,15 +70,17 @@ class View(QMainWindow):
                 row = i // 4
                 column = i % 4
                 i += 1
-                self.button = QPushButton()
+                button = QPushButton()
+                button.setText(files[ch])
+                button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
                 
                 if files[ch] == "=":
-                    self.layout_keys.addWidget(self.button, 4, 2, 1, 2)
+                    self.layout_keys.addWidget(button, 4, 2, 1, 2)
                     
                 else:
-                    self.layout_keys.addWidget(self.button, row, column)
-                self.button.setText(files[ch])
+                    self.layout_keys.addWidget(button, row, column)
+                
 
         self.keys.setLayout(self.layout_keys)
 
-        self.main_layout.addWidget(self.keys)
+        self.main_layout.addWidget(self.keys, stretch=5)
