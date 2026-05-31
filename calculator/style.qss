@@ -1,10 +1,28 @@
 QWidget {
-    background-color: #121212;
+    background-color: #131313;
 }
 
 QPushButton {
-    color: #FFFFFF;            
-    background-color: #232323; 
-    border: 1px solid #333333; 
-    border-radius: 4px;      
+    color: #FFFFFF;         
+    background-color: #131313; 
+    border: 1px solid #131313; 
+    border-radius: 4px;
+}
+
+QPushButton:hover {
+    background-color: #1D1D1D;
+    border: 1px solid #131313;
+}
+
+QPushButton:pressed {
+    background-color: #1a1a1a;
+}
+
+#input_line {
+    color: #FFFFFF;
+    font-size: 20px;
+}
+
+#fun_btn {
+    color: #ff8800;
 }
