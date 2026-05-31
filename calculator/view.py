@@ -7,7 +7,9 @@ from PyQt6.QtWidgets import (
     QGridLayout,
     QPushButton
 )
+
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIntValidator
 
 class View(QMainWindow):
     def __init__(self):
@@ -31,12 +33,14 @@ class View(QMainWindow):
         self.layout_display.setSpacing(0)
 
         self.historial_line = QLineEdit()
+        self.historial_line.setObjectName("historial_line")
 
         self.historial_line.setReadOnly(True)
         self.historial_line.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.historial_line.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.input_line = QLineEdit()
+        self.input_line.setValidator(QIntValidator())
         self.input_line.setObjectName("input_line")
 
         self.input_line.setReadOnly(False)
