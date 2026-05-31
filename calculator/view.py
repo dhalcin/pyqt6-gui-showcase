@@ -37,6 +37,7 @@ class View(QMainWindow):
         self.historial_line.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.input_line = QLineEdit()
+        self.input_line.setObjectName("input_line")
 
         self.input_line.setReadOnly(False)
         self.input_line.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
@@ -57,10 +58,10 @@ class View(QMainWindow):
         
         symbols = {
             "file_1": ["C", "<", "%", "/"],
-            "file_2": ["1", "2", "3", "X"],
-            "file_3": ["4", "5", "6", "-"],
-            "file_4": ["7", "8", "9", "+"],
-            "file_5": ["0", ".", "="]
+            "file_2": [1, 2, 3, "X"],
+            "file_3": [4, 5, 6, "-"],
+            "file_4": [7, 8, 9, "+"],
+            "file_5": [0, ".", "="]
         }
 
         i = 0
@@ -71,8 +72,14 @@ class View(QMainWindow):
                 column = i % 4
                 i += 1
                 button = QPushButton()
-                button.setText(files[ch])
+
+                if not isinstance(files[ch], int):
+                    if not files[ch] == ".":
+                        button.setObjectName("fun_btn")
+
+                button.setText(str(files[ch]))
                 button.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+                button.setCursor(Qt.CursorShape.PointingHandCursor)
                 
                 if files[ch] == "=":
                     self.layout_keys.addWidget(button, 4, 2, 1, 2)
